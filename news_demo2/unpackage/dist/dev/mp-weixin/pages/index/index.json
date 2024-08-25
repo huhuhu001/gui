@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "AI知天下",
+  "usingComponents": {
+    "newsbox": "/components/newsbox/newsbox"
+  }
+}
