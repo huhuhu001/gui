@@ -1,116 +1,150 @@
 <template>
-	<view class="detail">
-		<view class="title">{{detail.title}}</view>
-		<view class="info">
-			<view class="author">编辑：{{detail.author}}</view>
-			<view class="time">发布日期：{{detail.time}}</view>
-		</view>
-		<view class="content">
-			<rich-text :nodes="detail.summary"></rich-text>			
-		</view>
-		<view class="description">
-			声明：内部测试
+	<view>
+		<view class="container">
+			<view class="detail">
+				<view class="title">{{detailObj.title}}</view>
+				<view class="info">
+					<view class="author">编辑：{{detailObj.author}}</view>
+					<view class="time">发布时间：{{detailObj.posttime}}</view>
+				</view>
+				<view class="content">
+					<!-- 富文本转换 -->
+					<rich-text :nodes="detailObj.content"></rich-text>
+				</view>
+				<view class="state">
+					注意注意注意注意注注意注意注意注意注意注意注意注意注意注意注意注意注意注意注意注意注意注意注意注意注意
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import {parseTime} from "@/utils/tool.js"
+	import {
+		parseTime
+	} from '@/utils/tool.js';
 
 	export default {
 		data() {
 			return {
-				options:null,
-				detail:{
-					title: "组件内默认的标题",
-					author: "张三",
-					hits: 668,
-					picurl: "../../static/images/0.jpg",
-					time: "10月10日",
-					looktime: null, // 假设这个字段存在时显示浏览时间
-					summary: "这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。"}
+				detailObj: {
+					title: "AI知天下",
+					author: "AI知天下",
+					posttime: "10月10日",
+					content: '<img src="../../static/images/0.jpg"/><p>这是一篇文章的简介.这是一篇文章的这是一篇文章的简介</p><img src="http://qingnian8.oss-cn-qingdao.aliyuncs.com/images/20231112/1699777442.jpg"/>这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。简介.这是一篇文章的简介.这是一篇文章的简介.。</p>'
+				}
 			};
 		},
-		onLoad(e){			
-			this.options=e;
-			console.log("操作数")
-			console.log(e)
-			this.getDetail();
+		onLoad(options) {
+			// 通过id获取新闻数据
+			this.getDetail(options);
 		},
-		//todo获取详细文章数据
-		methods:{
-			getDetail(){
+		methods: {
+			// 获取详情
+			getDetail(options) {
 				uni.request({
-					url:"https://ku.qingnian8.com/dataApi/news/detail.php",
-					data:this.options,
-					success:res=>{
-						console.log(res)
-						//
-						res.data.posttime=parseTime(res.data.posttime)
-						res.data.content=res.data.content.replace(/<img/gi,'<img style="max-width:100%"')						
-						this.detail=res.data
-						
-						this.saveHistory()
-						
+					url: "https://ku.qingnian8.com/dataApi/news/detail.php",
+					data: options,
+					success: (res) => {
+						// 时间戳转换，图片标签的替换
+						res.data.posttime = parseTime(res.data.posttime);
+						res.data.content = res.data.content.replace(/<img/gi, '<img style="max-width:100%;"');
+
+						this.detailObj = res.data;
 						uni.setNavigationBarTitle({
-							title:this.detail.title
-						})
+							title: this.detailObj.title
+						});
+
+						let historyArr = uni.getStorageSync("historyArr") || [];
+						let oneData = {
+							id: this.detailObj.id,
+							classid: this.detailObj.classid,
+							picurl: this.detailObj.picurl,
+							title: this.detailObj.title,
+							looktime: parseTime(Date.now())
+						};
+
+						let index = historyArr.findIndex(item => item.id === oneData.id);
+						if (index >= 0) {
+							historyArr.splice(index, 1);
+						}
+
+						historyArr.unshift(oneData);
+						historyArr = historyArr.slice(0, 10);
+
+						uni.setStorageSync("historyArr", historyArr);
 					}
-				})
-			},
-			
-			//缓存记录
-			saveHistory(){
-				let historyArr=uni.getStorageSync("historyArr") || []
-				let item={
-					id:this.detail.id,
-					classid:this.detail.classid,
-					picurl:this.detail.picurl,
-					title:this.detail.title,
-					looktime:parseTime(Date.now())
-				}
-				// 缓存数组内容去重
-				let index=historyArr.findIndex(i=>{
-					return i.id==this.detail.id
-				})
-				
-				if(index>=0){
-					historyArr.splice(index,1)
-				}
-								
-				historyArr.unshift(item)	
-				historyArr=historyArr.slice(0,10)		
-				uni.setStorageSync("historyArr",historyArr)
+				});
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-.detail{
-	padding:30rpx;
-	.title{
-		font-size: 46rpx;
-		color:#333;
+// 设置基础的容器限制和居中
+.container {
+	max-width: 750rpx;
+	width: 100%;
+	border-radius: 20px;
+	margin:0 auto;
+	padding:10px; // 在小屏幕上有内边距
+	box-sizing: border-box;
+	background-color: #ccc;
+	
+}
+
+.detail {
+	.title {
+		font-size: 50rpx;
+		line-height: 1.6em;
+		
 	}
-	.info{
-		background: #F6F6F6;
-		padding:20rpx;
-		font-size: 25rpx;
-		color:#666;
+	.info {
+		padding: 0 30rpx;
+		margin: 20rpx 0;
+		height: 80rpx;
+		background: #f6f6f6;
 		display: flex;
 		justify-content: space-between;
-		margin:40rpx 0;
+		align-items: center;
+		font-size: 22rpx;
+		color: #888;
 	}
 	.content{
-		padding-bottom:50rpx;		
+		padding-bottom: 50rpx;
 	}
-	.description{
+	.state {
 		background: #FEF0F0;
 		font-size: 26rpx;
-		padding:20rpx;
-		color:#F89898;
+		padding: 10rpx;
+		color: #F89898;
 		line-height: 1.8em;
+		border-radius: 20px;
+	}
+	img {
+	    max-width: 100%;
+	    height: auto;
+	    display: block;
+		border-radius: 10px;
+	  }
+}
+
+// 响应式媒体查询
+@media (min-width: 1200rpx) { 
+	.container{
+		max-width: 1200rpx;
+	}
+	.detail {
+		padding: 20px 20px 0px 20px;
+		.title {
+			font-size: 2rem; 
+		}
+		.info {
+			font-size: 1rem;
+		}
+		.state {
+			font-size: 1rem;
+		}
 	}
 }
 </style>
