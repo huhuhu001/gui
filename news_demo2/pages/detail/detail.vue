@@ -31,7 +31,7 @@
 					title: "AI知天下",
 					author: "AI知天下",
 					posttime: "10月10日",
-					content: '<img src="../../static/images/0.jpg"/><p>这是一篇文章的简介.这是一篇文章的这是一篇文章的简介</p><img src="http://qingnian8.oss-cn-qingdao.aliyuncs.com/images/20231112/1699777442.jpg"/>这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。简介.这是一篇文章的简介.这是一篇文章的简介.。</p>'
+					content: '<img src="../../static/images/0.jpg"/><p>这是一篇文章的简介.这是一篇文章的这是一篇文章的简介</p><img src="http://qingnian8.oss-cn-qingdao.aliyuncs.com/images/20231112/1699777442.jpg"/><p>这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。简介.这是一篇文章的简介.这是一篇文章的简介.。</p>'
 				}
 			};
 		},
@@ -81,70 +81,90 @@
 </script>
 
 <style lang="scss">
-// 设置基础的容器限制和居中
-.container {
-	max-width: 750rpx;
-	width: 100%;
-	border-radius: 20px;
-	margin:0 auto;
-	padding:10px; // 在小屏幕上有内边距
-	box-sizing: border-box;
-	background-color: #ccc;
-	
-}
-
-.detail {
-	.title {
-		font-size: 50rpx;
-		line-height: 1.6em;
-		
-	}
-	.info {
-		padding: 0 30rpx;
-		margin: 20rpx 0;
-		height: 80rpx;
-		background: #f6f6f6;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 22rpx;
-		color: #888;
-	}
-	.content{
-		padding-bottom: 50rpx;
-	}
-	.state {
-		background: #FEF0F0;
-		font-size: 26rpx;
-		padding: 10rpx;
-		color: #F89898;
-		line-height: 1.8em;
+	// 设置基础的容器限制和居中
+	.container {
+		max-width: 750rpx;
+		width: 100%;
 		border-radius: 20px;
-	}
-	img {
-	    max-width: 100%;
-	    height: auto;
-	    display: block;
-		border-radius: 10px;
-	  }
-}
+		margin: 0 auto;
+		padding: 10rpx;
+		box-sizing: border-box;
+		background-color: white;
+		border: 5rpx solid #9c9c9c;
 
-// 响应式媒体查询
-@media (min-width: 1200rpx) { 
-	.container{
-		max-width: 1200rpx;
 	}
+
 	.detail {
-		padding: 20px 20px 0px 20px;
+		background-color: #ccc;
+		border-radius: 20px;
+		padding: 10px;
+
 		.title {
-			font-size: 2rem; 
+			font-size: 50rpx;
+			line-height: 1.6em;
+
 		}
+
 		.info {
-			font-size: 1rem;
+			padding: 0 30rpx;
+			margin: 20rpx 0;
+			height: 80rpx;
+			background: #f6f6f6;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 22rpx;
+			color: #888;
+			border-radius: 10px;
 		}
+
+		.content {
+			padding-bottom: 50rpx;
+		}
+
 		.state {
-			font-size: 1rem;
+			background: #FEF0F0;
+			font-size: 26rpx;
+			padding: 10rpx;
+			color: #F89898;
+			line-height: 1.8em;
+			border-radius: 20px;
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+			display: block;
+			border-radius: 10px;
+		}
+
+		p {
+			margin: 20rpx 0; 
+			text-indent: 2em;
 		}
 	}
-}
+
+	// 响应式媒体查询
+	@media (min-width: 1200rpx) {
+		.container {
+			max-width: 1200rpx;
+
+		}
+
+		.detail {
+			padding: 20px 20px 0px 20px;
+
+			.title {
+				font-size: 2rem;
+			}
+
+			.info {
+				font-size: 1rem;
+			}
+
+			.state {
+				font-size: 1rem;
+			}
+		}
+	}
 </style>
