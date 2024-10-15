@@ -1,7 +1,7 @@
 {
-    "name" : "青年帮新闻",
-    "appid" : "__UNI__6403707",
-    "description" : "",
+    "name" : "AI知天下",
+    "appid" : "__UNI__B9BD16E",
+    "description" : "AIGC用最少的时间，找最想的信息",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -106,9 +106,10 @@
     },
     "vueVersion" : "2",
     "h5" : {
-        "title" : "ainews",
+        "title" : "AI知天下",
         "router" : {
-            "base" : "./"
+            "base" : "./",
+            "mode" : "hash"
         }
     }
 }

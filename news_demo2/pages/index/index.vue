@@ -5,7 +5,7 @@
 				<text class="left-text">AI知天下</text>
 				<view class="input-wrapper">
 					<input v-model="searchQuery" type="text" placeholder="搜一搜" class="search-input" />
-		<!-- 			<icon type="search" size="20" color="#363636"></icon> -->
+					<!-- 			<icon type="search" size="20" color="#363636"></icon> -->
 					<button @click="handleSearch" class="search-button">
 						搜索
 					</button>
@@ -21,7 +21,7 @@
 
 				<view class="dropdown" v-if="hiddenKeywords.length > 0">
 					<button @click="toggleDropdown" class="dropdown-button">
-					{{ dropdownButtonText }}
+						{{ dropdownButtonText }}
 					</button>
 					<view v-if="isDropdownOpen" class="dropdown-content">
 						<text v-for="(keyword, index) in hiddenKeywords" :key="index" class="dropdown-keyword"
@@ -37,8 +37,11 @@
 				<view v-if="readNums!=0" class="readNums">
 					<text>包含{{readNums}}条新闻</text>
 				</view>
+				<view class="expand-collapse-button" @click="toggleExpand">
+					<text>{{ isExpanded ? '收起' : '展开' }}</text>
+				</view>
 			</view>
-		</view>2
+		</view>
 
 
 		<view class="content" :style="{ 'padding-top': contentPaddingTop + 'px' }">
@@ -72,7 +75,7 @@
 				searchQuery: '',
 				showError: false,
 
-				allKeywords: ['自动生成', '自动生成', '新闻', 'GC','AI', '自动生成', '新闻', 'GC'],
+				allKeywords: ['自动生成', '自动生成', '新闻', 'GC', 'AI', '自动生成', '新闻', 'GC'],
 
 				displayedKeywords: [],
 				hiddenKeywords: [],
@@ -138,19 +141,26 @@
 				currentId: 50,
 				loading: 0, //0默认  1加载中  2没有更多了
 
-				typedText: '', // ai总结
-				fullText: '欢迎来，获取最新资讯欢迎来，获取最新资讯！欢迎来，获取最新资讯！欢迎来，获取最新资讯！欢迎来，获取最新资讯！欢迎来，获取最新资讯！欢迎来，获取最新资讯！欢迎来，获取最新资讯！！',
-				readNums: 4,
+				maxCharsPerLine: 0, // 一行最多能显示的字符数
+				typedText: '', // 打印的ai总结
+				fullTypedText: '', // 完整的 typedText
+				fullText: {
+					value: '' // 确保有一个初始值
+				},
+				fullText: '讯！欢迎来，获取最新资讯讯！欢迎来，获取最新资讯讯！欢迎来，获取最新资讯！！',
+				readNums: 6,
 				topOffset: 0,
 
 				aiSumupHeight: 0,
 				heightCheckInterval: null,
-				contentPaddingTop: 40,
+				contentPaddingTop: 60,
 
 				scrollCheckInterval: null,
 				scrollTopH: 0,
 				isApp: false, // 标记是否是小程序环境
 				showBackToTop: false,
+				isExpanded: true,
+				typingCompleted: false, // 打字效果完成标志
 
 			}
 		},
@@ -159,6 +169,9 @@
 			this.startTyping();
 			this.initHeightCheck();
 			this.initScrollCheck();
+
+
+
 			// 检测是否是小程序环境
 			if (typeof wx !== 'undefined' && typeof wx.onPageScroll === 'function') {
 				this.isApp = true;
@@ -168,6 +181,7 @@
 			}
 
 		},
+		computed: {},
 		beforeDestroy() {
 			clearInterval(this.heightCheckInterval);
 
@@ -237,7 +251,38 @@
 			toggleDropdown() {
 				this.isDropdownOpen = !this.isDropdownOpen;
 			},
+			toggleExpand() {
+				//打字结束后点击才有效果
+				if (this.typingCompleted) {
 
+					// 计算一行最多能显示的字符数
+					const container = document.querySelector('.typing-text');
+					console.log("文本容器" + container.nodeName)
+					const containerWidth = container.offsetWidth;
+					console.log("容器宽度" + containerWidth)
+					if (container) {
+						const context = document.createElement('canvas').getContext('2d');
+						context.font = '16px Arial'; // 假设字体大小为 16px，根据实际情况调整
+						const sampleText = 'A'; // 使用单个字符作为样本
+						const textWidth = context.measureText(sampleText).width + 5;
+						console.log("字符宽度" + textWidth)
+						//const containerWidth = container.offsetWidth - 10; // 减去一些边距
+
+						this.maxCharsPerLine = Math.floor(containerWidth / textWidth);
+						console.log("最大字符" + this.maxCharsPerLine)
+					}
+					if (this.isExpanded) {
+						// 收起时，只显示一行文本，并用省略号替代剩余部分
+						//const trimmedText = this.fullText ? this.fullText.value.substring(0, this.maxCharsPerLine) : '';
+						console.log("一行文本" + this.fullText.value)
+						this.typedText = ""
+					} else {
+						// 展开时，显示全部文本
+						this.typedText = this.fullText;
+					}
+					this.isExpanded = !this.isExpanded;
+				}
+			},
 			// todo更新显示的关键词,实时计算所有关键词长
 			updateKeywords() {
 				const containerWidth = document.querySelector('.keywords-container').offsetWidth;
@@ -245,7 +290,7 @@
 				const keywordWidth = 65; // 假每个关键词的宽度
 				const maxKeywordsPerRow = Math.floor(containerWidth / keywordWidth);
 
-				this.displayedKeywords = this.allKeywords.slice(0, maxKeywordsPerRow-1);
+				this.displayedKeywords = this.allKeywords.slice(0, maxKeywordsPerRow - 1);
 				this.hiddenKeywords = this.allKeywords.slice(maxKeywordsPerRow);
 			},
 
@@ -343,6 +388,10 @@
 						this.typedText += this.fullText.charAt(index);
 						index++;
 						setTimeout(typing, interval);
+						this.typingCompleted = false;
+					} else {
+						this.typingCompleted = true;
+
 					}
 				};
 
@@ -376,8 +425,6 @@
 				// console.log(`.aiSumup 的高度为: ${this.aiSumupHeight}px`);
 				// console.log(` content的高度为: ${this.contentPaddingTop}px`);
 			},
-
-
 		}
 	}
 </script>
@@ -406,7 +453,7 @@
 		flex-direction: column;
 		/* 子元素垂直排列 */
 		align-items: center;
-		border-radius: 0px 0px 20px 20px;
+		// border-radius: 0px 0px 20px 20px;
 	}
 
 	.search-row {
@@ -449,12 +496,12 @@
 
 		.search-button {
 			padding: 10px 8px;
-			background-color: #225074 ;
+			background-color: #225074;
 			color: white;
 			border: none;
 			cursor: pointer;
 			font-size: 14px;
-			
+
 
 		}
 
@@ -505,10 +552,12 @@
 			cursor: pointer;
 			font-size: 10px;
 			border-radius: 15px;
+
 			.dropdown-button:active {
 				background-color: #00438b;
 			}
 		}
+
 		.dropdown-content {
 			position: absolute;
 			top: 100%;
@@ -516,9 +565,10 @@
 			background-color: rgba(0, 0, 0, 0);
 			z-index: 1002;
 			width: 150rpx;
+
 			.dropdown-keyword {
 				//flex-wrap: nowrap;
-				text-align:center;
+				text-align: center;
 				display: block;
 				margin-bottom: 5rpx;
 				border-radius: 20rpx;
@@ -528,9 +578,9 @@
 				text-decoration: none;
 				font-size: 14px;
 				cursor: pointer;
-				
+
 			}
-			
+
 			.dropdown-keyword:hover {
 				background-color: #00438b;
 			}
@@ -551,7 +601,7 @@
 		width: 100%;
 		max-width: 600px;
 		align-items: center;
-		border-radius: 15px;
+		border-radius: 10px;
 		color: #545454;
 		font-size: 10px;
 
@@ -562,9 +612,18 @@
 			text-align: left;
 		}
 
+		.expand-collapse-button {
+			margin-top: 10px;
+			text-align: right;
+			cursor: pointer;
+			font-size: 14px;
+			color: white;
+		}
+
 	}
 
 	.content {
+
 		padding: 30rpx;
 		padding-top: 80rpx;
 		background: #ccc;
@@ -574,7 +633,9 @@
 		width: 100%;
 		box-sizing: border-box;
 		border-radius: 20px;
+		transition: padding-top 0.1s ease;
 
+		/* 0.3秒的平滑过渡 */
 		.row {
 			border: 1px solid #efefef;
 			padding: 20rpx 10px;

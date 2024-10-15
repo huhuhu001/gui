@@ -39,7 +39,7 @@ export default {
           author: "AI知天下",
           hits: 668,
           picurl: "../../static/images/0.jpg",
-          time: "10月10日",
+          time: "10月10日",   
           looktime: null, // 假设这个字段存在时显示浏览时间
           summary: "这是一篇文章的简介.这是一篇文章的这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.这是一篇文章的简介.。简介.这是一篇文章的简介.这是一篇文章的简介.。"
         };
@@ -57,20 +57,23 @@ export default {
   display: flex;
   flex-direction: column;
   .title {
-    font-size: 36rpx;
+	padding-left: 10rpx;
+    font-size: 30rpx;
+	font-weight: bolder;
     color: #333;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; // 确保单行文本
   }
   .source {
+	padding-left: 10rpx;
     font-size: 26rpx;
-    color: #999;
+    color: #b3b3b3;
     margin-bottom: 10rpx; 
   }
   .pic {
     width: 100%;
-    height: 400rpx;
+    height: 350rpx;
     image {
       width: 100%;
       height: 100%;
@@ -78,8 +81,8 @@ export default {
     }
   }
   .summary {
-    font-size: 28rpx;
-    color: #555;
+    font-size: 25rpx;
+    color: #848484;
     line-height: 1.5;
     margin-top: 10rpx; 
     p {

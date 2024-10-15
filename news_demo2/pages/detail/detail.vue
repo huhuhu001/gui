@@ -98,6 +98,7 @@
 		background-color: #ccc;
 		border-radius: 20px;
 		padding: 10px;
+		
 
 		.title {
 			font-size: 50rpx;
@@ -119,6 +120,7 @@
 		}
 
 		.content {
+			padding-top: 20rpx;
 			padding-bottom: 50rpx;
 		}
 
@@ -128,14 +130,15 @@
 			padding: 10rpx;
 			color: #F89898;
 			line-height: 1.8em;
-			border-radius: 20px;
+			border-radius: 10px;
 		}
-
 		img {
 			max-width: 100%;
 			height: auto;
 			display: block;
 			border-radius: 10px;
+			border: 2px solid #ddd; 
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 		}
 
 		p {
@@ -152,7 +155,7 @@
 		}
 
 		.detail {
-			padding: 20px 20px 0px 20px;
+			padding: 20px 20px 10px 20px;
 
 			.title {
 				font-size: 2rem;

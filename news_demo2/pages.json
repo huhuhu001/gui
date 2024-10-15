@@ -6,76 +6,64 @@
 			"style": {
 				"navigationBarTitleText": "AI知天下"
 			}
-		}
-	    ,{
-            "path" : "pages/user/user",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "个人中心",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/detail/detail",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "新闻详情",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-		,{
-			"path" : "pages/one/one",
-			"style" : 
-			{
-				"navigationBarTitleText" : "搜索主页"
+		}, {
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationBarTitleText": "新闻详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/one/one",
+			"style": {
+				"navigationBarTitleText": "搜索主页"
 			}
 		},
 		{
-			"path" : "pages/test1111/test1111",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/test1111/test1111",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		},
 		{
-			"path" : "pages/test1111/newTest2222",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/test1111/newTest2222",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		},
 		{
-			"path" : "pages/test1111/test333",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/test1111/test333",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		},
 		{
-			"path" : "pages/test1111/testSave_1",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/test1111/testSave_1",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		},
 		{
-			"path" : "pages/test1111/testSave222",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/test1111/testSave222",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		},
 		{
-			"path" : "pages/test1111/test444444",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
+			"path": "pages/test1111/test444444",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		}
 
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "ai咨询",
