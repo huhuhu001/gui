@@ -1,0 +1,94 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "AI知天下"
+			}
+		}, {
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationBarTitleText": "新闻详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/one/one",
+			"style": {
+				"navigationBarTitleText": "搜索主页"
+			}
+		},
+		{
+			"path": "pages/test1111/test1111",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/test1111/newTest2222",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/test1111/test333",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/test1111/testSave_1",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/test1111/testSave222",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/test1111/test444444",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}
+
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "ai咨询",
+		// "navigationBarBackgroundColor": "#31C27C",
+		"backgroundColor": "#F8F8F8",
+		"meta": {
+			"referrer": "no-referrer"
+		}
+	},
+	"uniIdRouter": {}
+	// "tabBar": {
+	// 	"color":"#666",
+	// 	"selectedColor": "#31C27C",
+	// 	"list": [
+	// 		{
+	// 			"text": "首页",
+	// 			"pagePath": "pages/index/index",
+	// 			"iconPath": "static/images/home.png",
+	// 			"selectedIconPath": "static/images/home-h.png"
+	// 		},{
+	// 			"text": "个人",
+	// 			"pagePath": "pages/user/user",
+	// 			"iconPath": "static/images/user.png",
+	// 			"selectedIconPath": "static/images/user-h.png"
+	// 		}
+	// 	]
+	// }
+}

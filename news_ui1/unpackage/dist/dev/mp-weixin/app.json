@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/user",
+    "pages/detail/detail",
+    "pages/one/one",
+    "pages/test1111/test1111",
+    "pages/test1111/newTest2222",
+    "pages/test1111/test333",
+    "pages/test1111/testSave_1"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "ai咨询",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {}
+}
